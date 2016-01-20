@@ -1,0 +1,16 @@
+{
+    "name": "epinaresg/text-cutter",
+    "description": "Text cutter",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Elvis",
+            "email": "epinaresg@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "TextCutter\\": "src/"
+        }
+    }
+}
