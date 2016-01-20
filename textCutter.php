@@ -5,17 +5,29 @@ namespace TextCutter;
 class TextCutter
 {
 
+    /** Output max length */
     public $max_length = 150;
+
+    /** Enable hyperlink in the output*/
     public $hyperlinks = false;
+
+    /** Input text */
     public $text = '';
+
+    /** Replace spaces with HTML spaces */
     public $html_spaces = false;
 
 
-    private $words;
+    /** Stores words from the Input text */
+    private $words = array();
+
+    /** Stores words */
     private $cut_words = array();
 
+    /** Output text */
     private $cut_text;
 
+    /** Gets all the words from the input text */
     private function get_words() {
 
         $currentText = $this->text;
@@ -24,7 +36,11 @@ class TextCutter
 
     }
 
-    private function is_a_hyperlink($word) {
+    /** Check if the word is a hyperlink
+     * @param $word
+     * @return bool
+     */
+    private function is_a_hyperlink( $word) {
 
         $lower_words = strtolower($word);
         if(substr($lower_words, 0, 7) === 'http://')
@@ -36,10 +52,19 @@ class TextCutter
 
     }
 
+
+    /** Build a HTML anchor tag
+     * @param $text
+     * @param $href
+     * @return string
+     */
     private function build_hyperlink($text, $href) {
         return '<a href="' . $href . '" target="_blank">' . $text . '</a>';
     }
 
+    /** Cut the input text
+     * @return string
+     */
     public function init() {
 
         $this->get_words();
@@ -84,14 +109,10 @@ class TextCutter
         }
 
         if($this->html_spaces)
-            $this->cut_text = str_replace(' ', '&nbsp;',implode(' ',$this->cut_words));
+            return $this->cut_text = str_replace(' ', '&nbsp;',implode(' ',$this->cut_words));
         else
-            $this->cut_text = implode(' ',$this->cut_words);
+            return $this->cut_text = implode(' ',$this->cut_words);
 
-    }
-
-    public function get_cut_text(){
-        return $this->cut_text;
     }
 
 }
@@ -103,7 +124,6 @@ Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde';
 
 $cutter = new TextCutter();
 $cutter->text = $text;
-$cutter->max_length = 50;
-$cutter->html_spaces = true;
-$cutter->init();
-var_dump($cutter->get_cut_text());
+$cutter->max_length = 100;
+$cutter->html_spaces = false;
+var_dump($cutter->init());
